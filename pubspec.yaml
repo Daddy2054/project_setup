@@ -11,9 +11,86 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
+  flutter_flavorizr: ^2.2.1
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
 
 flutter:
   uses-material-design: true
+
+flavorizr:
+  ide: "vscode"
+  app:
+    android:
+      flavorDimensions: "flavor"
+    #ios:
+
+  flavors:
+    dev:
+      app:
+        name: "EcomApp"
+
+      android:
+        applicationId: "com.example.project_setup"
+        generateDummyAssets: true
+        #icon: ""
+        customConfig:
+          applicationIdSuffix: "\".development\""
+          versionNameSuffix: "\"Dev\"" # Don't forget to escape strings with \"
+          signingConfig: signingConfigs.debug
+         
+      ios:
+        bundleId: "com.example.project_setup"
+        generateDummyAssets: true
+        #icon: ""
+        #buildSettings: 
+
+    qa:
+      app:
+        name: "EcomApp"
+
+      android:
+        applicationId: "com.example.project_setup"
+        generateDummyAssets: true
+        #icon: ""
+        customConfig:
+          applicationIdSuffix: "\".qa\""
+          versionNameSuffix: "\"QA\"" # Don't forget to escape strings with \"
+          signingConfig: signingConfigs.qa
+      ios:
+        bundleId: "com.example.project_setup"
+        generateDummyAssets: true
+        #icon: ""
+    
+    uat:
+      app:
+        name: "EcomApp"
+
+      android:
+        applicationId: "com.example.project_setup"
+        generateDummyAssets: true
+        #icon: ""
+        customConfig:
+          applicationIdSuffix: "\".uat\""
+          versionNameSuffix: "\"UAT\"" # Don't forget to escape strings with \"
+          signingConfig: signingConfigs.uat
+      ios:
+        bundleId: "com.example.project_setup"
+        generateDummyAssets: true
+        #icon: ""
+
+    prod:
+      app:
+        name: "EcomApp"
+
+      android:
+        applicationId: "com.example.project_setup"
+        generateDummyAssets: true
+        #icon: ""
+        customConfig:         
+          signingConfig: signingConfigs.release
+      ios:
+        bundleId: "com.example.project_setup"
+        generateDummyAssets: true
+        #icon: ""
