@@ -33,7 +33,7 @@ android {
             applicationId "com.example.project_setup"
             applicationIdSuffix ".development"
             versionNameSuffix "Dev"
-            signingConfig signingConfigs.debug
+  //          signingConfig signingConfigs.debug
             resValue "string", "app_name", "EcomApp"
         }
         qa {
@@ -41,7 +41,7 @@ android {
             applicationId "com.example.project_setup"
             applicationIdSuffix ".qa"
             versionNameSuffix "QA"
-            signingConfig signingConfigs.qa
+  //          signingConfig signingConfigs.qa
             resValue "string", "app_name", "EcomApp"
         }
         uat {
@@ -49,13 +49,13 @@ android {
             applicationId "com.example.project_setup"
             applicationIdSuffix ".uat"
             versionNameSuffix "UAT"
-            signingConfig signingConfigs.uat
+ //           signingConfig signingConfigs.uat
             resValue "string", "app_name", "EcomApp"
         }
         prod {
             dimension "flavor"
             applicationId "com.example.project_setup"
-            signingConfig signingConfigs.release
+  //          signingConfig signingConfigs.release
             resValue "string", "app_name", "EcomApp"
         }
     }
