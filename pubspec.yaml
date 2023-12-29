@@ -34,6 +34,7 @@ flavorizr:
       android:
         applicationId: "com.example.project_setup"
         generateDummyAssets: true
+        icon: "assets/images/icons/shopping_dev.png"
         #icon: ""
         customConfig:
           applicationIdSuffix: "\".development\""
@@ -53,6 +54,7 @@ flavorizr:
       android:
         applicationId: "com.example.project_setup"
         generateDummyAssets: true
+        icon: "assets/images/icons/shopping.png"
         #icon: ""
         customConfig:
           applicationIdSuffix: "\".qa\""
@@ -70,6 +72,7 @@ flavorizr:
       android:
         applicationId: "com.example.project_setup"
         generateDummyAssets: true
+        icon: "assets/images/icons/shopping.png"
         #icon: ""
         customConfig:
           applicationIdSuffix: "\".uat\""
@@ -87,6 +90,7 @@ flavorizr:
       android:
         applicationId: "com.example.project_setup"
         generateDummyAssets: true
+        icon: "assets/images/icons/shopping.png"
         #icon: ""
         customConfig:         
           signingConfig: signingConfigs.release
