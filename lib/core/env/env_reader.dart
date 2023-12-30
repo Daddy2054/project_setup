@@ -1,7 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../flavor/flavor.dart';
+import 'package:project_setup/core/flavor/flavor.dart';
 
 final envReaderProvider = Provider<EnvReader>((ref) {
   return EnvReader();

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'core/env/env_reader.dart';
-import 'core/flavor/flavor.dart';
-import 'main_widget.dart';
+import 'package:project_setup/core/env/env_reader.dart';
+import 'package:project_setup/core/flavor/flavor.dart';
+import 'package:project_setup/main_widget.dart';
 
 
 void mainApp(Flavor flavor) async {
