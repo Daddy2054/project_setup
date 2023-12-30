@@ -1,7 +1,11 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../flavors.dart';
+import '../flavor/flavor.dart';
 
+final envReaderProvider = Provider<EnvReader>((ref) {
+  return EnvReader();
+});
 class EnvReader {
   String getEnvFileName(Flavor flavor) {
     switch (flavor) {
