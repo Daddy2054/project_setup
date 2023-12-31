@@ -1,0 +1,13 @@
+{
+    "@@last_modified": "2023-12-31T23:02:11.972777",
+    "@@locale": "es",
+    "text3": "Ha presionado el botón {counter} tiempos:",
+    "@text3": {
+        "description": "Auto-generated for text3",
+        "placeholders": {
+            "counter": {}
+        }
+    },
+    "text4": "Incremento",
+    "text2": "Página de inicio de Demo de Flutter"
+}

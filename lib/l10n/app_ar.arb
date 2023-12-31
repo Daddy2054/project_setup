@@ -1,0 +1,13 @@
+{
+    "@@last_modified": "2023-12-31T23:02:11.977583",
+    "@@locale": "ar",
+    "text3": "لقد دفعت الزر {counter} مرات:",
+    "@text3": {
+        "description": "Auto-generated for text3",
+        "placeholders": {
+            "counter": {}
+        }
+    },
+    "text4": "زيادة راتب",
+    "text2": "الصفحة الرئيسية Demo Flutter"
+}

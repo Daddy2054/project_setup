@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:project_setup/base/base_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:project_setup/i18n/i18n.dart';
 
 class MainWidget extends StatelessWidget {
   const MainWidget({super.key});
@@ -8,11 +11,23 @@ class MainWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const [
+        AppLocalizations.delegate, // Add this line
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''), // English, no country code
+        Locale('es', ''), // Spanish, no country code
+        Locale('ar', ''), // Spanish, no country code
+      ],
+      locale: AppLocales.en.locale,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(title: 'Flutter Demo Home Page'),
+      home: const HomePage(title: 'Flutter Demo Home Page',),
     );
   }
 }
@@ -45,8 +60,9 @@ class _MyHomePageState extends BaseState<HomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Text(
+              // 'You have pushed the button this many times:',
+              translation.text3(_counter),
             ),
             Text(
               '$_counter',
@@ -57,7 +73,7 @@ class _MyHomePageState extends BaseState<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        tooltip: translation.text4,
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
