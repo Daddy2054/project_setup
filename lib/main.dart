@@ -7,6 +7,8 @@ import 'package:project_setup/core/env/env_reader.dart';
 import 'package:project_setup/core/flavor/flavor.dart';
 import 'package:project_setup/main_widget.dart';
 
+import 'package:project_setup/core/providers/internet_connection_observer.dart';
+
 
 void mainApp(Flavor flavor) async {
 
@@ -21,6 +23,9 @@ void mainApp(Flavor flavor) async {
   // Setup Logger
   container.read(setupLoggingProvider);
   
+    // Observer internet connection
+  container.read(internetConnectionObserverProvider);
+
   runApp(
     // Expose a [ProviderContainer] to the widget tree.
     UncontrolledProviderScope(
