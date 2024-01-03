@@ -201,6 +201,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      sha256: "797e1e341c3dd2f69f2dad42564a6feff3bfb87187d05abb93b9609e6f1645c3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.4.0"
+  dio_http_formatter:
+    dependency: "direct main"
+    description:
+      name: dio_http_formatter
+      sha256: "3ac0f427cbe1ac9dfaf14231bf2cccdc49c9015e67b786bde6bd9bacd148218d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.1"
   equatable:
     dependency: transitive
     description:

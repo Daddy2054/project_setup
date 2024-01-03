@@ -10,6 +10,10 @@ dependencies:
   # https://pub.dev/packages/connectivity_plus
   connectivity_plus: ^5.0.2
 
+  # https://pub.dev/packages/dio
+  dio: ^5.4.0
+  # https://pub.dev/packages/dio_http_formatter
+  dio_http_formatter: ^3.2.1
   flutter:
     sdk: flutter
   # https://pub.dev/packages/flutter_dotenv
