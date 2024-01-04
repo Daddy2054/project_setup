@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_setup/common/logging/logging_provider.dart';
+import 'package:project_setup/core/db/hive_db.dart';
 
 import 'package:project_setup/core/env/env_reader.dart';
 import 'package:project_setup/core/flavor/flavor.dart';
@@ -9,12 +10,10 @@ import 'package:project_setup/main_widget.dart';
 
 import 'package:project_setup/core/providers/internet_connection_observer.dart';
 
-
 void mainApp(Flavor flavor) async {
-
 // An object that stores the state of the providers and allows overriding the behavior of a specific provider.
   final container = ProviderContainer();
-  
+
 // Read the env file with dotEnv
   final envReader = container.read(envReaderProvider);
   final envFile = envReader.getEnvFileName(flavor);
@@ -22,8 +21,11 @@ void mainApp(Flavor flavor) async {
 
   // Setup Logger
   container.read(setupLoggingProvider);
+
+  // setup the hive database
+  container.read(hiveDbProvider);
   
-    // Observer internet connection
+  // Observer internet connection
   container.read(internetConnectionObserverProvider);
 
   runApp(

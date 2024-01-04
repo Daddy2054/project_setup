@@ -7,7 +7,6 @@ environment:
   sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
-  # https://pub.dev/packages/connectivity_plus
   connectivity_plus: ^5.0.2
 
   # https://pub.dev/packages/dio
@@ -22,8 +21,11 @@ dependencies:
     sdk: flutter
   # https://pub.dev/packages/flutter_riverpod
   flutter_riverpod: ^2.4.9
-  # https://pub.dev/packages/internet_connection_checker
+  # https://pub.dev/packages/flutter_secure_storage
   flutter_secure_storage: ^8.1.0
+  # https://pub.dev/packages/hive
+  hive_flutter: ^1.1.0
+  # https://pub.dev/packages/internet_connection_checker
   internet_connection_checker: ^1.0.0+1
   # https://pub.dev/packages/intl
   intl: ^0.18.1
@@ -33,19 +35,18 @@ dependencies:
   upgrader: ^8.4.0
 
 dev_dependencies:
-  # https://pub.dev/packages/flutter_flavorizr
+  build_runner: ^2.4.7
   flutter_flavorizr: ^2.2.1
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  flutter_translation_sheet: ^1.0.32  
-  # https://pub.dev/packages/flutter_translation_sheet
-  # https://github.com/roipeker/flutter_translation_sheet/wiki
+  flutter_translation_sheet: ^1.0.32
+  hive_generator: ^2.0.1
 
 flutter:
   uses-material-design: true
   generate: true
-  
+
   assets:
     - .dev.env
     - .qa.env
