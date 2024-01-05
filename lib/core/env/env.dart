@@ -9,7 +9,8 @@ abstract class EnvDev {
   static const String baseUrl = _EnvDev.baseUrl;
   @EnviedField(varName: 'API_KEY', obfuscate: true)
   static final String apiKey = _EnvDev.apiKey;
-
+  @EnviedField(varName: 'CERTIFICATE', obfuscate: true)
+  static final String certificate = _EnvDev.certificate;
 }
 
 @Envied(path: '.qa.env')
@@ -18,6 +19,8 @@ abstract class EnvQA {
   static const String baseUrl = _EnvQA.baseUrl;
   @EnviedField(varName: 'API_KEY', obfuscate: true)
   static final String apiKey = _EnvQA.apiKey;
+    @EnviedField(varName: 'CERTIFICATE', obfuscate: true)
+  static final String certificate = _EnvDev.certificate;
 }
 
 @Envied(path: '.uat.env')
@@ -26,7 +29,8 @@ abstract class EnvUAT {
   static const String baseUrl = _EnvUAT.baseUrl;
   @EnviedField(varName: 'API_KEY', obfuscate: true)
   static final String apiKey = _EnvUAT.apiKey;
-
+  @EnviedField(varName: 'CERTIFICATE', obfuscate: true)
+  static final String certificate = _EnvDev.certificate;
 }
 
 @Envied(path: '.prod.env')
@@ -35,5 +39,6 @@ abstract class EnvProd {
   static const String baseUrl = _EnvProd.baseUrl;
   @EnviedField(varName: 'API_KEY', obfuscate: true)
   static final String apiKey = _EnvProd.apiKey;
-
+  @EnviedField(varName: 'CERTIFICATE', obfuscate: true)
+  static final String certificate = _EnvDev.certificate;
 }

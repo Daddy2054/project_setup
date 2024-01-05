@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/io.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_http_formatter/dio_http_formatter.dart';
 import 'package:project_setup/core/env/env_reader.dart';
@@ -20,5 +23,15 @@ final networkServiceProvider = Provider<Dio>((ref) {
       NetworkServiceInterceptor(),
     ]);
 
+    // ignore: deprecated_member_use
+    (_dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
+      ((client) {
+    final certBytes = envReader.getCertificate();
+    final SecurityContext context = SecurityContext();
+    client.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => false;
+    context.setTrustedCertificatesBytes(certBytes);
+    return HttpClient(context: context);
+  });
   return _dio;
 });

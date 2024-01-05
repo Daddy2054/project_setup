@@ -1,4 +1,7 @@
 
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:project_setup/core/env/env.dart';
 import 'package:project_setup/core/flavor/flavor.dart';
 import 'package:project_setup/core/providers/flavor_provider.dart';
@@ -41,6 +44,21 @@ class EnvReader {
         return EnvUAT.apiKey;
       case Flavor.prod:
         return EnvProd.apiKey;        
+      default:
+        throw Exception(".env file not found");
+    }
+  }
+  
+    Uint8List getCertificate() {
+    switch (_flavor) {
+      case Flavor.dev:
+        return base64Decode(EnvDev.certificate);
+      case Flavor.qa:
+        return base64Decode(EnvQA.certificate);
+      case Flavor.uat:
+        return base64Decode(EnvUAT.certificate);
+      case Flavor.prod:
+        return base64Decode(EnvProd.certificate);        
       default:
         throw Exception(".env file not found");
     }

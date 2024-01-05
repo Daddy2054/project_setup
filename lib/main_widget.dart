@@ -1,16 +1,18 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:upgrader/upgrader.dart';
+
 import 'package:project_setup/base/base_consumer_state.dart';
-import 'package:project_setup/base/base_state.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_setup/common/error/no_internet_connection_screen.dart';
 import 'package:project_setup/core/providers/app_background_state_provider.dart';
 import 'package:project_setup/core/providers/internet_connection_observer.dart';
+import 'package:project_setup/core/remote/network_service.dart';
 import 'package:project_setup/i18n/i18n.dart';
-import 'package:upgrader/upgrader.dart';
 
 class MainWidget extends ConsumerStatefulWidget {
   const MainWidget({super.key});
@@ -92,32 +94,48 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {    
+  void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
 
     switch (state) {
       case AppLifecycleState.inactive:
-        ref.read(appBackgroundStateProvider.notifier).state = true;        
+        ref.read(appBackgroundStateProvider.notifier).state = true;
         break;
       case AppLifecycleState.resumed:
-        ref.read(appBackgroundStateProvider.notifier).state = false;        
+        ref.read(appBackgroundStateProvider.notifier).state = false;
         break;
       default:
     }
   }
 }
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<HomePage> createState() => _MyHomePageState();
+  ConsumerState<HomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends BaseState<HomePage> {
+class _MyHomePageState extends BaseConsumerState<HomePage> {
   int _counter = 0;
+  // ignore: unused_field
+  late Dio _dio;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _dio = ref.read(networkServiceProvider);
+      getSomeData();
+    });
+  }
+
+  void getSomeData() async {
+   // final response = await _dio.get('gettasks');
+   // log.info(response);
+  }
 
   void _incrementCounter() {
     setState(() {
