@@ -1,33 +1,49 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import 'package:project_setup/core/env/env.dart';
+import 'package:project_setup/core/flavor/flavor.dart';
+import 'package:project_setup/core/providers/flavor_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:project_setup/core/flavor/flavor.dart';
-
 final envReaderProvider = Provider<EnvReader>((ref) {
-  return EnvReader();
-});
-class EnvReader {
-  String getEnvFileName(Flavor flavor) {
-    switch (flavor) {
-      case Flavor.dev:
-        return ".dev.env";
-      case Flavor.qa:
-        return ".qa.env";
-      case Flavor.uat:
-        return ".uat.env";
-      case Flavor.prod:
-        return ".prod.env";
+  final flavor = ref.watch(flavorProvider);
 
+  return EnvReader(flavor);
+
+});
+
+class EnvReader {
+  final Flavor _flavor;
+
+  EnvReader(this._flavor);
+
+  String getBaseUrl() {
+    switch (_flavor) {
+      case Flavor.dev:
+        return EnvDev.baseUrl;
+      case Flavor.qa:
+        return EnvQA.baseUrl;
+      case Flavor.uat:
+        return EnvUAT.baseUrl;
+      case Flavor.prod:
+        return EnvProd.baseUrl;        
       default:
         throw Exception(".env file not found");
     }
   }
 
-  String getBaseUrl() {
-    return dotenv.get('BASE_URL');
-  }
-
   String getApiKey() {
-    return dotenv.get('API_KEY');
+    switch (_flavor) {
+      case Flavor.dev:
+        return EnvDev.apiKey;
+      case Flavor.qa:
+        return EnvQA.apiKey;
+      case Flavor.uat:
+        return EnvUAT.apiKey;
+      case Flavor.prod:
+        return EnvProd.apiKey;        
+      default:
+        throw Exception(".env file not found");
+    }
   }
+  
 }
