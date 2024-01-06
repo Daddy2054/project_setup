@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_setup/core/auth/local_auth.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:project_setup/base/base_consumer_state.dart';
@@ -133,8 +134,8 @@ class _MyHomePageState extends BaseConsumerState<HomePage> {
   }
 
   void getSomeData() async {
-   // final response = await _dio.get('gettasks');
-   // log.info(response);
+    // final response = await _dio.get('gettasks');
+    // log.info(response);
   }
 
   void _incrementCounter() {
@@ -168,6 +169,16 @@ class _MyHomePageState extends BaseConsumerState<HomePage> {
               Text(
                 '$_counter',
                 style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  final didAuthenticate =
+                      await ref.read(localAuthProvider).authenticate();
+                  if (didAuthenticate) {
+                    debugPrint('successful auth');
+                  }
+                },
+                child: const Text('Authenticate To Unlock'),
               ),
             ],
           ),

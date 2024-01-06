@@ -31,6 +31,8 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   # https://pub.dev/packages/intl
   intl: ^0.18.1
+  # https://pub.dev/packages/local_auth
+  local_auth: ^2.1.7
   # https://pub.dev/packages/logging
   logging: ^1.2.0
   # https://pub.dev/packages/upgrader
