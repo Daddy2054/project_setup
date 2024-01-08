@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:project_setup/core/auth/local_auth.dart';
-import 'package:project_setup/features/setting/presentation/ui/setting_screen.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:project_setup/base/base_consumer_state.dart';
 import 'package:project_setup/common/error/no_internet_connection_screen.dart';
+import 'package:project_setup/core/auth/local_auth.dart';
 import 'package:project_setup/core/providers/app_background_state_provider.dart';
 import 'package:project_setup/core/providers/internet_connection_observer.dart';
 import 'package:project_setup/core/remote/network_service.dart';
+import 'package:project_setup/core/route/go_router_provider.dart';
 import 'package:project_setup/i18n/i18n.dart';
 
 class MainWidget extends ConsumerStatefulWidget {
@@ -73,10 +73,15 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final isAppInBackground = ref.watch(appBackgroundStateProvider);
-    return MaterialApp(
+    // final isAppInBackground = ref.watch(appBackgroundStateProvider);
+    final router = ref.watch(goRouterProvider);
+    
+    return MaterialApp.router(
       title: 'Flutter Demo',
-      navigatorKey: navigatorKey,
+            routeInformationProvider: router.routeInformationProvider,
+      routeInformationParser: router.routeInformationParser,
+      routerDelegate: router.routerDelegate,
+ 
       scaffoldMessengerKey: scaffoldMessengerKey,
       localizationsDelegates: const [
         AppLocalizations.delegate, // Add this line
@@ -89,9 +94,9 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: isAppInBackground
-          ? const ColoredBox(color: Colors.black)
-          : const SettingScreen(),
+      // home: isAppInBackground
+      //     ? const ColoredBox(color: Colors.black)
+      //     : const SettingScreen(),
     );
   }
 
