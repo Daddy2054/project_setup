@@ -1,6 +1,6 @@
 import 'package:project_setup/common/logging/logging_provider.dart';
-import 'package:project_setup/core/db/hive_db.dart';
 import 'package:project_setup/core/flavor/flavor.dart';
+import 'package:project_setup/core/local/db/hive_db.dart';
 import 'package:project_setup/core/providers/flavor_provider.dart';
 import 'package:project_setup/core/providers/internet_connection_observer.dart';
 import 'package:project_setup/main_widget.dart';
@@ -18,7 +18,8 @@ void mainApp(Flavor flavor) async {
   container.read(setupLoggingProvider);
 
   // setup the hive database
-  container.read(hiveDbProvider);
+  final db = container.read(hiveDbProvider);
+  await db.init();
 
   // Observer internet connection
   container.read(internetConnectionObserverProvider);

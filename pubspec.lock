@@ -419,6 +419,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.9"
+  flutter_screen_lock:
+    dependency: "direct main"
+    description:
+      name: flutter_screen_lock
+      sha256: "648c1da1fcb0f8e93ab4cb63e13f564ee1530f9f8aa261d7b210b6f19a4a6cf2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.4"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -485,6 +493,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  freezed:
+    dependency: "direct main"
+    description:
+      name: freezed
+      sha256: "6c5031daae12c7072b3a87eff98983076434b4889ef2a44384d0cae3f82372ba"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.6"
+  freezed_annotation:
+    dependency: "direct main"
+    description:
+      name: freezed_annotation
+      sha256: c3fd9336eb55a38cc1bbd79ab17573113a8deccd0ecbbf926cca3c62803b5c2d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
   frontend_server_client:
     dependency: transitive
     description:

@@ -6,6 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_setup/core/auth/local_auth.dart';
+import 'package:project_setup/features/setting/presentation/ui/setting_screen.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:project_setup/base/base_consumer_state.dart';
@@ -90,7 +91,7 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
       ),
       home: isAppInBackground
           ? const ColoredBox(color: Colors.black)
-          : const HomePage(title: 'Flutter Demo Home Page'),
+          : const SettingScreen(),
     );
   }
 

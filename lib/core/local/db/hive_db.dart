@@ -1,7 +1,9 @@
+
+
 import 'dart:convert';
 
-import 'package:project_setup/core/db/hive_box_key.dart';
-import 'package:project_setup/core/db/hive_const.dart';
+import 'package:project_setup/core/local/db/hive_box_key.dart';
+import 'package:project_setup/core/local/db/hive_const.dart';
 import 'package:project_setup/core/local/secure_storage/secure_storage.dart';
 import 'package:project_setup/core/local/secure_storage/secure_storage_impl.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,23 +13,23 @@ final hiveDbProvider = Provider<HiveDb>((ref) {
   final secureStorage = ref.watch(secureStorageProvider);
 
   return HiveDb(secureStorage);
+
 });
 
 class HiveDb {
+
   final SecureStorage _secureStorage;
 
-  HiveDb(this._secureStorage) {
-    _init();
-  }
+  HiveDb(this._secureStorage);
 
-  void _init() async {
+  Future<void> init() async {
     //You can provide a [subDir] where the boxes should be stored.
     await Hive.initFlutter(hiveDbPath);
 
     String? encryptionKey;
     encryptionKey = await _secureStorage.getHiveKey();
 
-    if (encryptionKey == null) {
+    if(encryptionKey == null) {      
       //Generates a secure encryption key using the fortuna random algorithm
       final key = Hive.generateSecureKey();
 
@@ -46,5 +48,6 @@ class HiveDb {
         encryptionCipher: HiveAesCipher(key),
       );
     }
+
   }
 }
