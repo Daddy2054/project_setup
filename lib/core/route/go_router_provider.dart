@@ -4,7 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:project_setup/common/error/no_internet_connection_screen.dart';
 import 'package:project_setup/common/error/no_route_screen.dart';
+import 'package:project_setup/core/route/notifier/go_router_notifier.dart';
 import 'package:project_setup/core/route/route_name.dart';
+import 'package:project_setup/features/auth/presentation/ui/login_screen.dart';
+import 'package:project_setup/features/auth/presentation/ui/signup_screen.dart';
 import 'package:project_setup/features/cart/presentation/ui/cart_screen.dart';
 import 'package:project_setup/features/dashboard/presentation/ui/dashboard_screen.dart';
 import 'package:project_setup/features/home/presentation/ui/home_screen.dart';
@@ -18,6 +21,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
     navigatorKey: navigatorKey,
     initialLocation: '/',
+    refreshListenable: ref.read(goRouterNotifierProvider),
     routes: <RouteBase>[
       GoRoute(
         parentNavigatorKey: navigatorKey,
@@ -25,6 +29,20 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         name: noInternetRoute,
         builder: (context, state) =>
             NoInternetConnectionScreen(key: state.pageKey),
+      ),
+      GoRoute(
+        parentNavigatorKey: navigatorKey,
+        path: '/login',
+        name: loginRoute,
+        builder: (context, state) => LoginScreen(key: state.pageKey),
+        routes: [
+          GoRoute(
+            parentNavigatorKey: navigatorKey,
+            path: '/signUp',
+            name: signUpRoute,
+            builder: (context, state) => SignUpScreen(key: state.pageKey),
+          ),
+        ],
       ),
       ShellRoute(
         navigatorKey: _shellNavigatorKey,

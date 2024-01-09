@@ -58,22 +58,22 @@ class _BottomNavigationWidgetState
     );
   }
 
-  static int _calculateSelectedIndex(BuildContext context) {
-    final GoRouter route = GoRouter.of(context);
-    final String location = route.location;
+  // static int _calculateSelectedIndex(BuildContext context) {
+  //   final GoRouter route = GoRouter.of(context);
+  //   final String location = route.location;
 
-    if (location.startsWith('/')) {
-      return 0;
-    }
-    if (location.startsWith('/cart')) {
-      return 1;
-    }
-    if (location.startsWith('/setting')) {
-      return 2;
-    }
+  //   if (location.startsWith('/')) {
+  //     return 0;
+  //   }
+  //   if (location.startsWith('/cart')) {
+  //     return 1;
+  //   }
+  //   if (location.startsWith('/setting')) {
+  //     return 2;
+  //   }
 
-    return 0;
-  }
+  //   return 0;
+  // }
 
   void _onItemTapped(int index) {
     ref.read(dashboardControllerProvider.notifier).setPageIndex(index);
