@@ -31,7 +31,7 @@ dependencies:
   freezed: ^2.4.6
   freezed_annotation: ^2.4.1
   # https://pub.dev/packages/go_router
-  go_router: ^13.0.1
+  go_router: ^5.0.5
   # https://pub.dev/packages/hive
   hive_flutter: ^1.1.0
   # https://pub.dev/packages/internet_connection_checker
