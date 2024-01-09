@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:project_setup/base/base_consumer_state.dart';
+import 'package:project_setup/features/dashboard/presentation/controller/dashboard_controller.dart';
 
 class BottomNavigationWidget extends ConsumerStatefulWidget {
   const BottomNavigationWidget({Key? key}) : super(key: key);
@@ -16,12 +17,12 @@ class _BottomNavigationWidgetState
     extends BaseConsumerState<BottomNavigationWidget> {
   @override
   Widget build(BuildContext context) {
-    // final index = ref
-    //     .watch(dashboardControllerProvider.select((value) => value.pageIndex));
+    final index = ref
+        .watch(dashboardControllerProvider.select((value) => value.pageIndex));
 
     return BottomNavigationBar(
-      currentIndex: _calculateSelectedIndex(context),
-      // currentIndex: index,
+      // currentIndex: _calculateSelectedIndex(context),
+      currentIndex: index,
 
       onTap: (value) => _onItemTapped(value),
       selectedItemColor: Colors.green,
@@ -39,7 +40,7 @@ class _BottomNavigationWidgetState
       ),
       items: const [
         BottomNavigationBarItem(
-          activeIcon: Icon(Icons.home_filled),
+          activeIcon: Icon(Icons.home),
           icon: Icon(Icons.home),
           label: 'Home',
         ),
@@ -75,7 +76,7 @@ class _BottomNavigationWidgetState
   }
 
   void _onItemTapped(int index) {
-    // ref.read(dashboardControllerProvider.notifier).setPageIndex(index);
+    ref.read(dashboardControllerProvider.notifier).setPageIndex(index);
 
     switch (index) {
       case 0:
