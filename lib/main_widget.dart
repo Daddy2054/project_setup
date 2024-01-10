@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:project_setup/base/base_consumer_state.dart';
-import 'package:project_setup/common/error/no_internet_connection_screen.dart';
 import 'package:project_setup/core/auth/local_auth.dart';
 import 'package:project_setup/core/providers/app_background_state_provider.dart';
 import 'package:project_setup/core/providers/internet_connection_observer.dart';
@@ -39,11 +38,7 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
         await ref.read(internetConnectionObserverProvider).isNetworkConnected();
     if (!isConnected) {
       if (!mounted) return;
-      navigatorKey.currentState?.push(
-        MaterialPageRoute(
-          builder: (_) => const NoInternetConnectionScreen(),
-        ),
-      );
+      ref.read(goRouterProvider).push('/noInternet');      
     }
   }
 
@@ -52,23 +47,24 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
         ref.read(internetConnectionObserverProvider).hasConnectionStream.stream;
     connectionStream.listen((isConnected) {
       if (!isConnected) {
-        _showSnackBar();
+        ref.read(goRouterProvider).push('/noInternet');      
+
       }
     });
   }
 
-  void _showSnackBar() {
-    scaffoldMessengerKey.currentState?.clearSnackBars();
-    scaffoldMessengerKey.currentState?.showSnackBar(
-      const SnackBar(
-        content: Text(
-          "No internet connection",
-        ),
-        duration: Duration(seconds: 3),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-  }
+  // void _showSnackBar() {
+  //   scaffoldMessengerKey.currentState?.clearSnackBars();
+  //   scaffoldMessengerKey.currentState?.showSnackBar(
+  //     const SnackBar(
+  //       content: Text(
+  //         "No internet connection",
+  //       ),
+  //       duration: Duration(seconds: 3),
+  //       behavior: SnackBarBehavior.floating,
+  //     ),
+  //   );
+  // }
 
   // This widget is the root of your application.
   @override

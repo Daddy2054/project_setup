@@ -13,7 +13,7 @@ import 'package:project_setup/features/dashboard/presentation/ui/dashboard_scree
 import 'package:project_setup/features/home/presentation/ui/home_screen.dart';
 import 'package:project_setup/features/setting/presentation/ui/setting_screen.dart';
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey(debugLabel: 'root');
+final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey(debugLabel: 'root');
 final GlobalKey<NavigatorState> _shellNavigatorKey =
     GlobalKey(debugLabel: 'shell');
 
@@ -22,14 +22,15 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   final notifier = ref.read(goRouterNotifierProvider);
 
   return GoRouter(
-    navigatorKey: navigatorKey,
+    navigatorKey: _rootNavigatorKey,
     initialLocation: '/',
     refreshListenable: notifier,
     redirect: (context, state) {
       final isLoggedIn = notifier.isLoggedIn;
       final isGoingToLogin = state.subloc == '/login';
+      final isGoingToNoInternet = state.location == '/noInternet';
 
-      if (!isLoggedIn && !isGoingToLogin && !isDuplicate) {
+      if (!isLoggedIn && !isGoingToLogin && !isDuplicate && !isGoingToNoInternet) {
         isDuplicate = true;
 
         return '/login';
@@ -47,14 +48,14 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     },
     routes: <RouteBase>[
       GoRoute(
-        parentNavigatorKey: navigatorKey,
+        parentNavigatorKey: _rootNavigatorKey,
         path: '/noInternet',
         name: noInternetRoute,
         builder: (context, state) =>
             NoInternetConnectionScreen(key: state.pageKey),
       ),
       GoRoute(
-        parentNavigatorKey: navigatorKey,
+        parentNavigatorKey: _rootNavigatorKey,
         path: '/login',
         name: loginRoute,
         builder: (context, state) => LoginScreen(key: state.pageKey),
