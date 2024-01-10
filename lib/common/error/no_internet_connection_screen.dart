@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:project_setup/base/base_consumer_state.dart';
 import 'package:project_setup/core/providers/internet_connection_observer.dart';
 
@@ -47,7 +48,7 @@ class _NoInternetConnectionScreenState
         await ref.read(internetConnectionObserverProvider).isNetworkConnected();
     if (isConnected) {
       if (!mounted) return;
-      Navigator.pop(context);
+      context.pop();
     }
   }
 
@@ -57,7 +58,7 @@ class _NoInternetConnectionScreenState
     connectionStream.listen((isConnected) {
       if (isConnected) {
         if (!mounted) return;
-        Navigator.pop(context);
+        context.pop();
       }
     });
   }
