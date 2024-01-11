@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_setup/core/firebase/crashlytics/crashlytics.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:project_setup/base/base_consumer_state.dart';
@@ -29,10 +30,16 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
   @override
   void initState() {
     super.initState();
+    _setCrashlyticsUser();
     _isNetworkConnected();
     _networkConnectionObserver();
   }
 
+  void _setCrashlyticsUser() async  {
+    final crashlytics = ref.read(crashlyticsProvider);
+     await  crashlytics.setUser('Roberto');
+  }
+  
   void _isNetworkConnected() async {
     final isConnected =
         await ref.read(internetConnectionObserverProvider).isNetworkConnected();
@@ -110,6 +117,7 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
       default:
     }
   }
+  
 }
 
 class HomePage extends ConsumerStatefulWidget {
