@@ -25,19 +25,19 @@ class _BottomNavigationWidgetState
       currentIndex: index,
 
       onTap: (value) => _onItemTapped(value),
-      selectedItemColor: Colors.green,
-      unselectedItemColor: Colors.grey,
+      // selectedItemColor: Colors.green,
+      // unselectedItemColor: Colors.grey,
       showUnselectedLabels: true,
-      selectedLabelStyle: const TextStyle(
-        color: Colors.green,
-        fontSize: 14,
-        fontWeight: FontWeight.w700,
-      ),
-      unselectedLabelStyle: const TextStyle(
-        color: Colors.grey,
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-      ),
+      // selectedLabelStyle: const TextStyle(
+      //   color: Colors.green,
+      //   fontSize: 14,
+      //   fontWeight: FontWeight.w700,
+      // ),
+      // unselectedLabelStyle: const TextStyle(
+      //   color: Colors.grey,
+      //   fontSize: 12,
+      //   fontWeight: FontWeight.w500,
+      // ),
       items: const [
         BottomNavigationBarItem(
           activeIcon: Icon(Icons.home),

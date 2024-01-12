@@ -1,11 +1,14 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:project_setup/core/firebase/crashlytics/crashlytics.dart';
+import 'package:project_setup/core/theme/app_theme.dart';
+import 'package:project_setup/core/theme/theme_const.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:project_setup/base/base_consumer_state.dart';
@@ -23,7 +26,8 @@ class MainWidget extends ConsumerStatefulWidget {
   ConsumerState<MainWidget> createState() => _MainWidgetState();
 }
 
-class _MainWidgetState extends BaseConsumerState<MainWidget> {
+class _MainWidgetState extends BaseConsumerState<MainWidget> with  AppThemeMixin {
+
   final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey();
   // final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
@@ -94,12 +98,22 @@ class _MainWidgetState extends BaseConsumerState<MainWidget> {
       ],
       supportedLocales: AppLocales.supportedLocales,
       locale: AppLocales.en.locale,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      theme: FlexThemeData.light(
+        colors: customFlexScheme.light,
+        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+        blendLevel: 9,
+        subThemesData: flexSubThemesDataLight,
+        visualDensity: FlexColorScheme.comfortablePlatformDensity,
       ),
-      // home: isAppInBackground
-      //     ? const ColoredBox(color: Colors.black)
-      //     : const SettingScreen(),
+      darkTheme: FlexThemeData.dark(
+        colors: customFlexScheme.dark,
+        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+        blendLevel: 15,
+        subThemesData: flexSubThemesDataDark,
+        visualDensity: FlexColorScheme.comfortablePlatformDensity,
+      ),
+      themeMode: currentTheme(kLight),
+      //home: isAppInBackground ? const ColoredBox(color: Colors.black) : const SettingScreen(),
     );
   }
 
