@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logging/logging.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'package:project_setup/core/firebase/analytics/analytics.dart';
 
 abstract class BaseConsumerState<T extends ConsumerStatefulWidget>
     extends ConsumerState<T> with WidgetsBindingObserver {
@@ -13,6 +15,7 @@ abstract class BaseConsumerState<T extends ConsumerStatefulWidget>
     log.info("$T initState");
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    ref.read(analyticsProvider).setCurrentScreen(screenName: T.toString());
   }
 
   @override
