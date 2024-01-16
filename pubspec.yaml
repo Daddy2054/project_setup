@@ -49,6 +49,7 @@ dependencies:
   # https://pub.dev/packages/logging
   logging: ^1.2.0
   # https://pub.dev/packages/upgrader
+  mask_text_input_formatter: ^2.8.0
   multiple_result: ^5.1.0
   retrofit: ^4.0.3
   upgrader: ^8.4.0
