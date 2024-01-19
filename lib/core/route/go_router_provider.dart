@@ -1,22 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:project_setup/common/error/no_internet_connection_screen.dart';
 import 'package:project_setup/common/error/no_route_screen.dart';
 import 'package:project_setup/core/route/notifier/go_router_notifier.dart';
 import 'package:project_setup/core/route/route_name.dart';
-import 'package:project_setup/features/auth/presentation/ui/login_screen.dart';
-import 'package:project_setup/features/auth/presentation/ui/signup_screen.dart';
+import 'package:project_setup/features/auth/login/presentation/ui/login_screen.dart';
+import 'package:project_setup/features/auth/signup/presentation/ui/signup_screen.dart';
 import 'package:project_setup/features/cart/presentation/ui/cart_screen.dart';
 import 'package:project_setup/features/dashboard/presentation/ui/dashboard_screen.dart';
 import 'package:project_setup/features/home/presentation/ui/home_screen.dart';
 import 'package:project_setup/features/product/presentation/ui/product_detail_screen.dart';
 import 'package:project_setup/features/setting/presentation/ui/setting_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey(debugLabel: 'root');
-final GlobalKey<NavigatorState> _shellNavigatorKey =
-    GlobalKey(debugLabel: 'shell');
+final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey(debugLabel: 'shell');
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   bool isDuplicate = false;
@@ -27,53 +26,73 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     initialLocation: '/',
     refreshListenable: notifier,
     redirect: (context, state) {
+
       final isLoggedIn = notifier.isLoggedIn;
       final isGoingToLogin = state.subloc == '/login';
       final isGoingToNoInternet = state.location == '/noInternet';
+      final isGoingToSignUp = state.location == '/login/signUp';
 
-      if (!isLoggedIn && !isGoingToLogin && !isDuplicate && !isGoingToNoInternet) {
-        isDuplicate = true;
+      if(!isDuplicate) {
+        if(isLoggedIn) {
+          if(isGoingToLogin || isGoingToSignUp) {
+            isDuplicate = true;
+            return '/';
+          }
+          
+        }
+        else {
+          if(!isGoingToLogin && !isGoingToSignUp && !isGoingToNoInternet) {
+            isDuplicate = true;
+            return '/login?from=${state.subloc}';
+          }
 
-        return '/login';
-      } else if (isLoggedIn && isGoingToLogin && !isDuplicate) {
-        isDuplicate = true;
-
-        return '/';
-      }
+        }
+      }     
+     
 
       if (isDuplicate) {
         isDuplicate = false;
       }
 
       return null;
+      
     },
-    routes: <RouteBase>[
+    routes: <RouteBase>  [
+
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
         path: '/noInternet',
         name: noInternetRoute,
-        builder: (context, state) =>
-            NoInternetConnectionScreen(key: state.pageKey),
+        builder: (context, state) => NoInternetConnectionScreen(key: state.pageKey),
       ),
+
       GoRoute(
         parentNavigatorKey: _rootNavigatorKey,
         path: '/login',
         name: loginRoute,
-        builder: (context, state) => LoginScreen(key: state.pageKey),
+        builder: (context, state)  {
+          final from = state.queryParams['from'];
+          return LoginScreen(key: state.pageKey, from: from);
+        },
         routes: [
+
           GoRoute(
             path: 'signUp',
             name: signUpRoute,
             builder: (context, state) => SignUpScreen(key: state.pageKey),
           ),
+
         ],
       ),
+
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (context, state, child) {
           return DashboardScreen(key: state.pageKey, child: child);
         },
+
         routes: [
+
           GoRoute(
             path: '/',
             name: homeRoute,
@@ -85,6 +104,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 ),
               );
             },
+
             routes: [
               GoRoute(
                 path: 'detail',
@@ -100,6 +120,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               ),
             ],
           ),
+
           GoRoute(
             path: '/cart',
             name: cartRoute,
@@ -112,6 +133,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
               );
             },
           ),
+
           GoRoute(
             path: '/setting',
             name: settingRoute,
@@ -126,6 +148,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
+
     ],
     errorBuilder: (context, state) => NoRouteScreen(
       key: state.pageKey,
