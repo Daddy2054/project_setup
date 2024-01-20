@@ -4,7 +4,7 @@ import 'package:project_setup/features/auth/signup/data/api/sign_up_api_service.
 import 'package:project_setup/features/auth/signup/data/dto/sign_up_response.dart';
 import 'package:project_setup/features/auth/signup/data/repository/isign_up_repository.dart';
 
-/// provider for ISignUpRepository
+/// provider to provide the instance of SignUpRepository
 final signUpRepositoryProvider = Provider<ISignUpRepository>((ref) {
   final signUpApiService = ref.watch(signUpApiServiceProvider);
 
