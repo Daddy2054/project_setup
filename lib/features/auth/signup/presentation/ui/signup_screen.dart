@@ -1,13 +1,16 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:project_setup/base/base_consumer_state.dart';
 import 'package:project_setup/common/extensions/string_hardcoded.dart';
 import 'package:project_setup/common/mixin/input_phone_formatter_mixin.dart';
 import 'package:project_setup/common/mixin/input_validation_mixin.dart';
 import 'package:project_setup/common/widget/app_scaffold.dart';
 import 'package:project_setup/common/widget/button/primary_button.dart';
-import 'package:project_setup/common/widget/checkbox/check_box_widget.dart';
 import 'package:project_setup/common/widget/form/custom_text_form_field.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:project_setup/features/auth/signup/presentation/controller/sign_up_controller.dart';
+import 'package:project_setup/features/auth/signup/presentation/ui/widget/signup_password_widget.dart';
+import 'package:project_setup/features/auth/signup/presentation/ui/widget/terms_conditions_checkbox_widget.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -68,9 +71,15 @@ class _SignUpScreenState extends BaseConsumerState<SignUpScreen>
                     ),
                   ],
                 ),
-                // onChanged: (String? value) {
+                onChanged: (String? value) {
+                  ref
+                      .read(
+                        signUpControllerProvider.notifier,
+                      )
+                      .setFormData(key: 'name', value: value);
 
-                // },
+                  return null;
+                },
               ),
               const SizedBox(height: 8),
               CustomTextFormField(
@@ -101,68 +110,42 @@ class _SignUpScreenState extends BaseConsumerState<SignUpScreen>
                 // },
               ),
               const SizedBox(height: 8),
-              CustomTextFormField(
+              SignUpPasswordWidget(
+                passwordController: _passwordController,
                 labelText: 'Password'.hardcoded,
-                hintText: 'Enter your password'.hardcoded,
-                keyboardType: TextInputType.visiblePassword,
-                textInputAction: TextInputAction.next,
-                controller: _passwordController,
-                isObscureText: true,
-                prefixIcon: const Icon(Icons.visibility_off),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    _passwordController.clear();
-                  },
-                  icon: const Icon(Icons.clear),
-                ),
-                validator: combine(
-                  [
-                    withMessage(
-                      'password is empty'.hardcoded,
-                      isTextEmpty,
-                    ),
-                    withMessage(
-                      'password is invalid'.hardcoded,
-                      isPasswordInvalid,
-                    ),
-                  ],
-                ),
-                // onChanged: (String? value) {
-
-                // },
+                hintText: 'Please enter your password'.hardcoded,
+                formKey: 'password'.hardcoded,
+                validators: [
+                  withMessage('password is empty', isTextEmpty),
+                  withMessage('invalid password', isPasswordInvalid),
+                ],
               ),
-              const SizedBox(height: 8),
-              CustomTextFormField(
+              const SizedBox(
+                height: 8,
+              ),
+              SignUpPasswordWidget(
+                passwordController: _confirmPasswordController,
                 labelText: 'Confirm Password'.hardcoded,
                 hintText: 'Enter your confirm password'.hardcoded,
-                keyboardType: TextInputType.visiblePassword,
-                textInputAction: TextInputAction.next,
-                controller: _confirmPasswordController,
-                isObscureText: true,
-                prefixIcon: const Icon(Icons.visibility_off),
-                suffixIcon: IconButton(
-                  onPressed: () {
-                    _confirmPasswordController.clear();
-                  },
-                  icon: const Icon(Icons.clear),
-                ),
-                validator: combine(
-                  [
-                    withMessage(
-                      'password is empty'.hardcoded,
-                      isTextEmpty,
-                    ),
-                    withMessage(
-                      'password is invalid'.hardcoded,
-                      isPasswordInvalid,
-                    ),
-                  ],
-                ),
-                // onChanged: (String? value) {
-//
-                // },
+                formKey: 'password_confirmation'.hardcoded,
+                validators: [
+                  withMessage('password is empty', isTextEmpty),
+                  withMessage('invalid password', isPasswordInvalid),
+                  withMessage(
+                    'Password and confirm password does not match',
+                    (String? confirmPassword) {
+                      final password = _passwordController.text;
+                      if (confirmPassword != password) {
+                        return ValidateFailResult.passwordNotMatch;
+                      }
+                      return null;
+                    },
+                  ),
+                ],
               ),
-              const SizedBox(height: 8),
+              const SizedBox(
+                height: 8,
+              ),
               CustomTextFormField(
                 labelText: 'Phone'.hardcoded,
                 hintText: 'Enter your phone'.hardcoded,
@@ -191,34 +174,42 @@ class _SignUpScreenState extends BaseConsumerState<SignUpScreen>
                     ),
                   ],
                 ),
-                // onChanged: (String? value) {
+                onChanged: (String? value) {
+                  ref
+                      .read(
+                        signUpControllerProvider.notifier,
+                      )
+                      .setFormData(
+                        key: 'phone',
+                        value: value?.replaceAll(RegExp(r'-'), ''),
+                      );
 
-                // },
+                  return null;
+                },
               ),
               const SizedBox(height: 8),
-              CheckboxWidget(
-                title: 'Terms and conditions',
-                subtitle: 'Please accept the terms and conditions',
-                value: false,
-                validator: (value) {
-                  return isValidTermsAndConditions(
-                    value,
-                    'Please accept the terms and conditions',
-                  );
-                },
-                onChanged: (value) {},
-              ),
+              TermsConditionsCheckboxWidget(),
               const SizedBox(height: 8),
               PrimaryButton(
                 text: 'SignUp',
                 isEnabled: true,
                 isLoading: false,
-                onPressed: () {},
+                onPressed: () {
+                  _signUp();
+                },
               ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _signUp() {
+    final isValid = _formKey.currentState?.validate();
+
+    if (isValid != null && isValid) {
+      ref.read(signUpControllerProvider.notifier).signUp();
+    }
   }
 }

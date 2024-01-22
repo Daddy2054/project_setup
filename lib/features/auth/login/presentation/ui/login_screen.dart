@@ -1,8 +1,9 @@
-import 'package:project_setup/base/base_consumer_state.dart';
-import 'package:project_setup/core/route/notifier/go_router_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import 'package:project_setup/base/base_consumer_state.dart';
+import 'package:project_setup/core/route/notifier/go_router_notifier.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   final String? from;
@@ -36,16 +37,12 @@ class _LoginScreenState extends BaseConsumerState<LoginScreen> {
               icon: const Icon(Icons.login),
               label: const Text('Login'),
             ),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text("Don't have an account?"),
-                const SizedBox(
-                  width: 8,
-                ),
+                const SizedBox(width: 8),
                 GestureDetector(
                   onTap: () => GoRouter.of(context).push('/login/signUp'),
                   child: const Text("Register Now!"),
