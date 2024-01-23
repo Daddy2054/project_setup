@@ -7,7 +7,9 @@ import 'package:project_setup/common/mixin/input_phone_formatter_mixin.dart';
 import 'package:project_setup/common/mixin/input_validation_mixin.dart';
 import 'package:project_setup/common/widget/app_scaffold.dart';
 import 'package:project_setup/common/widget/button/primary_button.dart';
+import 'package:project_setup/common/widget/dialog/confirm_dialog.dart';
 import 'package:project_setup/common/widget/form/custom_text_form_field.dart';
+import 'package:project_setup/core/route/go_router_provider.dart';
 import 'package:project_setup/features/auth/signup/presentation/controller/sign_up_controller.dart';
 import 'package:project_setup/features/auth/signup/presentation/ui/widget/signup_password_widget.dart';
 import 'package:project_setup/features/auth/signup/presentation/ui/widget/terms_conditions_checkbox_widget.dart';
@@ -20,7 +22,7 @@ class SignUpScreen extends ConsumerStatefulWidget {
 }
 
 class _SignUpScreenState extends BaseConsumerState<SignUpScreen>
-    with InputValidationMixin, InputPhoneFormatter {
+    with InputValidationMixin, InputPhoneFormatter, ConfirmDialog {
   final GlobalKey<FormState> _formKey = GlobalKey();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -41,6 +43,7 @@ class _SignUpScreenState extends BaseConsumerState<SignUpScreen>
 
   @override
   Widget build(BuildContext context) {
+    listenSignUpStateChange();
     return AppScaffold(
       title: const Text("SignUp"),
       widget: Padding(
@@ -211,5 +214,37 @@ class _SignUpScreenState extends BaseConsumerState<SignUpScreen>
     if (isValid != null && isValid) {
       ref.read(signUpControllerProvider.notifier).signUp();
     }
+  }
+
+  /// listen to signUp state change and on signUp = true then show the dialog box
+  void listenSignUpStateChange() {
+    ref.listen<bool?>(
+        signUpControllerProvider.select(
+          (value) => value.isSignUp.value,
+        ), (previous, next) {
+      if (next != null && next) {
+        showConfirmDialog(
+          context: context,
+          title: 'Do you want to login?'.hardcoded,
+          msg: 'You will be redirected to login screen'.hardcoded,
+          btnYesText: 'Yes'.hardcoded,
+          btnNoText: 'No'.hardcoded,
+          onYesTap: () {
+            final navigator = Navigator.of(context, rootNavigator: true);
+            if (navigator.canPop()) {
+              navigator.pop();
+            }
+            // navigate to login screen
+            ref.read(goRouterProvider).go('login');
+          },
+          onNoTap: () {
+            final navigator = Navigator.of(context, rootNavigator: true);
+            if (navigator.canPop()) {
+              navigator.pop();
+            }
+          },
+        );
+      }
+    });
   }
 }
