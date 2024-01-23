@@ -6,11 +6,11 @@ import 'package:project_setup/common/extensions/string_hardcoded.dart';
 import 'package:project_setup/common/mixin/input_phone_formatter_mixin.dart';
 import 'package:project_setup/common/mixin/input_validation_mixin.dart';
 import 'package:project_setup/common/widget/app_scaffold.dart';
-import 'package:project_setup/common/widget/button/primary_button.dart';
 import 'package:project_setup/common/widget/dialog/confirm_dialog.dart';
 import 'package:project_setup/common/widget/form/custom_text_form_field.dart';
 import 'package:project_setup/core/route/go_router_provider.dart';
 import 'package:project_setup/features/auth/signup/presentation/controller/sign_up_controller.dart';
+import 'package:project_setup/features/auth/signup/presentation/ui/widget/signup_button_widget.dart';
 import 'package:project_setup/features/auth/signup/presentation/ui/widget/signup_password_widget.dart';
 import 'package:project_setup/features/auth/signup/presentation/ui/widget/terms_conditions_checkbox_widget.dart';
 
@@ -193,14 +193,7 @@ class _SignUpScreenState extends BaseConsumerState<SignUpScreen>
               const SizedBox(height: 8),
               TermsConditionsCheckboxWidget(),
               const SizedBox(height: 8),
-              PrimaryButton(
-                text: 'SignUp',
-                isEnabled: true,
-                isLoading: false,
-                onPressed: () {
-                  _signUp();
-                },
-              ),
+              SignUpButtonWidget(onPressed: _signUp),
             ],
           ),
         ),
